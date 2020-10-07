@@ -14,6 +14,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -40,9 +41,37 @@ public class FileIO {
 	}
 
 
+	public boolean fileExists(String path) {
+		File f = new File(path);
 
-	public void saveToXML(String root, String key, String value) {
-		Document dom;
+		if(f.exists() && !f.isDirectory())
+			return true;
+		else 
+			return false;
+	}
+
+	public boolean Createfile(String path) {
+		boolean result = false;
+		try {
+			File myObj = new File(path);
+			if (myObj.createNewFile()) {
+				System.out.println("File created: " + myObj.getName());
+				result = true;
+			} else {
+				System.out.println("File already exists.");
+				result = false;
+			}
+		} catch (IOException e) {
+			System.out.println("An error occurred.");
+			e.printStackTrace();
+			result = false;
+		}
+		return result;
+	}
+
+
+	public void saveToXML(String docRoot, String root, String key, String value) {
+		Document doc;
 		Element e = null;
 
 		// instance of a DocumentBuilderFactory
@@ -51,30 +80,38 @@ public class FileIO {
 			// use factory to get an instance of document builder
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			// create instance of DOM
-			dom = (Document) db.newDocument();
+			doc = db.newDocument();
 
 			// create the root element
-			Element rootEle = dom.createElement(root);
+			Element rootEle = doc.createElement(docRoot);
+			doc.appendChild(rootEle);
+			Element child = doc.createElement(root);
+			rootEle.appendChild(child);
+			Element child1 = doc.createElement(key);
+			child.appendChild(child1);
+			child1.appendChild(doc.createTextNode(value));
 
+			/*
 			// create data elements and place them under root
-			e = dom.createElement(key);
-			e.appendChild(dom.createTextNode(value));
+			e = doc.createElement(root);
+			e.appendChild(key);
+			e.appendChild(doc.createTextNode(value));
 			rootEle.appendChild(e);
 
 
 
-			dom.appendChild(rootEle);
-
+			doc.appendChild(rootEle);
+			 */
 			try {
 				Transformer tr = TransformerFactory.newInstance().newTransformer();
 				tr.setOutputProperty(OutputKeys.INDENT, "yes");
 				tr.setOutputProperty(OutputKeys.METHOD, "xml");
 				tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-				tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "purchaser.dtd");
+				//	tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "ppp");
 				tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
 				// send DOM to file
-				tr.transform(new DOMSource(dom), 
+				tr.transform(new DOMSource(doc), 
 						new StreamResult(new FileOutputStream(location)));
 
 			} catch (TransformerException te) {
@@ -86,6 +123,14 @@ public class FileIO {
 			System.out.println("UsersXML: Error trying to instantiate DocumentBuilder " + pce);
 		}
 	}
+
+
+
+
+
+
+
+
 
 
 	public boolean readXML(String key) {
@@ -134,6 +179,42 @@ public class FileIO {
 
 
 
+
+	public boolean demoReadXML(String key) {
+		rolev = new ArrayList<String>();
+		String entry;
+		String root = "James";
+		Document dom;
+		// Make an  instance of the DocumentBuilderFactory
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		try {
+			// use the factory to take an instance of the document builder
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			// parse using the builder to get the DOM mapping of the    
+			// XML file
+			dom = db.parse(location);
+
+			Element doc = dom.getDocumentElement();
+
+			entry = getTextValue(root, doc, key);
+			if (root != null) {
+				if (!root.isEmpty())
+					rolev.add(root);
+			}
+			System.out.println(entry);
+
+			return true;
+
+		} catch (ParserConfigurationException pce) {
+			System.out.println(pce.getMessage());
+		} catch (SAXException se) {
+			System.out.println(se.getMessage());
+		} catch (IOException ioe) {
+			System.err.println(ioe.getMessage());
+		}
+
+		return false;
+	}
 
 
 
@@ -241,35 +322,57 @@ public class FileIO {
 		}
 	}
 
-
-	public void save3(){	
+	public void addElement(String docRoot,String root, String newTag, String value) {
+		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder docBuilder = null;
+		Document doc = null;
 		try {
-			// create XML file
-			File file = new File(location);
+			docBuilder = docFactory.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-			// create an instance of `JAXBContext`
-			JAXBContext context = JAXBContext.newInstance(User.class);
+		try {
+			doc = docBuilder.parse(location);
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		 NodeList users = doc.getElementsByTagName("Customers");
+	        Element emp = null;
 
-			// create an instance of `Marshaller`
-			Marshaller marshaller = context.createMarshaller();
-
-			// enable pretty-print XML output
-			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-			// create user object
-			User user = new User(2, "First Last", "me@lewis.com",
-					new String[]{"Member", "Moderator", "Owner"}, false);
-
-			// convert user object to XML file
-			marshaller.marshal(user, file);
-
-		} catch (JAXBException ex) {
-			ex.printStackTrace();
+	        // loop for each user
+	        for (int i = 0; i < users.getLength(); i++) {
+	            emp = (Element) users.item(i);
+	            
+	            Element salaryElement = doc.createElement("Customer");
+	              Element child1 = doc.createElement("Name");
+	              child1.appendChild(doc.createTextNode("Helen"));
+	            Element child2 = doc.createElement("Item1");
+	            child2.appendChild(doc.createTextNode("SunRoof"));
+	         //    child1.appendChild(child2);
+	            //salaryElement.appendChild(doc.createTextNode("10000"));
+	              salaryElement.appendChild(child1);
+	              salaryElement.appendChild(child2);
+	            emp.appendChild(salaryElement);
+	        } 
+	      
+		try {
+			writeXMLFile(doc);
+		} catch (TransformerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 
 
 	}
+/*
 	public void read3() {
 		try {
 			// parse XML file to build DOM
@@ -296,9 +399,9 @@ public class FileIO {
 			ex.printStackTrace();
 		}
 	}
+*/
 
-
-
+/*
 	public void updateNode() {
 
 		try {
@@ -316,14 +419,14 @@ public class FileIO {
 			// Node staff = company.getFirstChild();
 
 			// Get the staff element by tag name directly
-		//	Node person = doc.getElementsByTagName(" id").item(0);
+			//	Node person = doc.getElementsByTagName(" id").item(0);
 
-		
-			
-		//	NamedNodeMap attr = person.getAttributes();
+
+
+			//	NamedNodeMap attr = person.getAttributes();
 			//Node nodeAttr = attr.getNamedItem("name");
 			Node name = doc.getElementsByTagName("name").item(0);
-		//	nodeAttr.setTextContent("changed name");
+			//	nodeAttr.setTextContent("changed name");
 
 			// append a new node to staff
 			Element age = doc.createElement("age");
@@ -331,21 +434,21 @@ public class FileIO {
 			company.appendChild(age);
 
 			// loop the staff child node
-		//	NodeList list = person.getChildNodes();
+			//	NodeList list = person.getChildNodes();
 
-		//	for (int i = 0; i < list.getLength(); i++) {
+			//	for (int i = 0; i < list.getLength(); i++) {
 
 			//	Node node = list.item(i);
 
-				// get the salary element, and update the value
+			// get the salary element, and update the value
 			//	if ("salary".equals(node.getNodeName())) {
 			//		node.setTextContent("2000000");
 			//	}
 
-				//remove firstname
+			//remove firstname
 			//	if ("firstname".equals(node.getNodeName())) {
 			//		staff.removeChild(node);
-				//}
+			//}
 
 			//}
 
@@ -368,6 +471,60 @@ public class FileIO {
 			sae.printStackTrace();
 		}
 
+
+	}*/
+
+
+
+	public void updateElementValue(String rootTag, String tagToFind, String oldValue, String newValue) {
+		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder docBuilder = null;
+		Document doc = null;
+		try {
+			docBuilder = docFactory.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			doc = docBuilder.parse(location);
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		NodeList users = doc.getElementsByTagName(rootTag);
+		Element user = null;
+		// loop for each user
+		for (int i = 0; i < users.getLength(); i++) {
+			user = (Element) users.item(i);
+			// Node name = user.getElementsByTagName("firstName").item(0).getFirstChild();
+			Node name = user.getElementsByTagName(tagToFind).item(0).getFirstChild();
+			if(name.getNodeValue().equals(oldValue))
+			name.setNodeValue(newValue);
+			try {
+				writeXMLFile(doc);
+			} catch (TransformerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void writeXMLFile(Document doc) throws TransformerException {
+		doc.getDocumentElement().normalize();
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = transformerFactory.newTransformer();
+		DOMSource source = new DOMSource(doc);
+		StreamResult result = new StreamResult(new File(location));
+		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+		transformer.transform(source, result);
+		System.out.println("XML file updated successfully");
 	}
 }
 
