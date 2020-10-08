@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
+<AnchorPane fx:id="aPane" prefHeight="442.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pkg.GUI_Controller_Trim">
+   <children>
+      <Button fx:id="btnNext" layoutX="568.0" layoutY="394.0" mnemonicParsing="false" onAction="#testTrim" text="Next" />
+      <Label layoutX="305.0" layoutY="21.0" text="Trim" />
+      <RadioButton fx:id="rbValue" layoutX="52.0" layoutY="91.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="119.0" selected="true" text="Value">
+         <toggleGroup>
+            <ToggleGroup fx:id="trimToggleGroup" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="rbCommon" layoutX="294.0" layoutY="91.0" mnemonicParsing="false" text="Common" toggleGroup="$trimToggleGroup" />
+      <RadioButton fx:id="rbExtreme" layoutX="545.0" layoutY="91.0" mnemonicParsing="false" text="Extreme" toggleGroup="$trimToggleGroup" />
+      <TextArea fx:id="taValue" editable="false" layoutX="11.0" layoutY="147.0" prefHeight="200.0" prefWidth="200.0" />
+      <TextArea fx:id="taCommon" layoutX="250.0" layoutY="147.0" prefHeight="200.0" prefWidth="200.0" />
+      <TextArea fx:id="taExtreme" layoutX="477.0" layoutY="147.0" prefHeight="200.0" prefWidth="200.0" />
+   </children>
 </AnchorPane>
-
