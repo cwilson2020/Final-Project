@@ -75,7 +75,7 @@ public class GUI_Controller_Trim {
 		switch(whichButton) {
 		case "Value":
 			System.out.println("Value Chosen");
-			valuePackage vp = new valuePackage(stage);
+			GUI_Launcher_ValueTrim vp = new GUI_Launcher_ValueTrim(stage);
 			
 			break;
 		case "Common":

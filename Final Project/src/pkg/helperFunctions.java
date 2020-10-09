@@ -18,7 +18,7 @@ public class helperFunctions {
 	public static OptionArray buildCommonOptions() {
 		OptionArray array = new OptionArray(5);
 		array.add(new Option("Leather Bucket Seats w/ lumbar support",100, 50, "Upgraded Seat Option"));
-		array.add(new Option("AM/FM CD PLayer w/ mp3 ",75, 25, "Upgraded Entertainment Option"));
+		array.add(new Option("AM/FM CD Player w/ mp3 ",75, 25, "Upgraded Entertainment Option"));
 		array.add(new Option("Alloy Rims Wheel Covers 16 inch wheels",150, 100, "Upgraded wheel Option"));		
 		array.add(new Option("Security System",175, 150, "Security System"));	
 		array.add(new Option("Adaptive Cruise Control",200, 150, "Standard Cruise Control"));

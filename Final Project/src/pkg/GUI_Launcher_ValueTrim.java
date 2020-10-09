@@ -8,14 +8,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class valuePackage {
+public class  GUI_Launcher_ValueTrim{
 
 	@FXML private TextArea taValue;
 	@FXML private TextArea taCommon;
@@ -23,29 +26,34 @@ public class valuePackage {
 	@FXML private ToggleGroup trimToggleGroup;
 	@FXML private Pane pPane;
 	@FXML private Stage stage;
+	@FXML private GridPane gPane;
+	@FXML private CheckBox cb1;
 
 
-
-	public valuePackage(Stage stage) {
+	public GUI_Launcher_ValueTrim(Stage stage) {
 		//this.fPane = fPane;
 		this.stage = stage;
 
 		try {
-			pPane = (Pane)FXMLLoader.load(getClass().getResource("OptionSelection.fxml"));
+			pPane = (Pane)FXMLLoader.load(getClass().getResource("ValuePackageConfigurator.fxml"));
+			//gPane = (GridPane)FXMLLoader.load(getClass().getResource("ValuePackageConfigurator.fxml"));
 			//	stage = (Stage) fPane.getScene().getWindow();
 			Scene scene = new Scene(pPane,800,700);
+
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-				stage.setScene(scene);
+			stage.setTitle("Value Package Option Menu");
+
+			stage.setScene(scene);
+
 			stage.show();
+
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		//scene = new Scene(aPane,800,700);
-		//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		//	stage.setScene(scene);
-		//	stage.show();
+
 	}
 
 

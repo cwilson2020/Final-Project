@@ -43,9 +43,6 @@ public class GUI_IO {
 			stage.setScene(scene);
 			stage.close();
 
-			//GUI_Controller_Trim gc = new GUI_Controller_Trim(stage);
-			//gc.show();
-			
 	
 			AnchorPane aPane = (AnchorPane)FXMLLoader.load(getClass().getResource("Specifics_Entry.fxml"));
 			scene = new Scene(aPane,800,700);

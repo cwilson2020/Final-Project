@@ -1,8 +1,8 @@
 package pkg;
 
-public class options {
+public class olptions {
 
-	public options() {
+	public olptions() {
 		double price;
 		String name;
 		
