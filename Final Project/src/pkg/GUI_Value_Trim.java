@@ -12,7 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-public class GUI_Controller_Trim {
+public class GUI_Value_Trim {
 	@FXML private TextArea taValue;
 	@FXML private TextArea taCommon;
 	@FXML private TextArea taExtreme;
@@ -26,7 +26,7 @@ public class GUI_Controller_Trim {
 		this.stage = stage;
 
 	}*/
-	public GUI_Controller_Trim() {
+	public GUI_Value_Trim() {
 
 		System.out.println("GUI _Controllerstage TestTrim constructor");
 
@@ -63,6 +63,8 @@ public class GUI_Controller_Trim {
 
 
 
+
+
 	public void nextButtonAction() {
 		System.out.println("GUI _Controllerstage TestTrim");
 
@@ -75,8 +77,6 @@ public class GUI_Controller_Trim {
 		switch(whichButton) {
 		case "Value":
 			System.out.println("Value Chosen");
-			valuePackage vp = new valuePackage(stage);
-			
 			break;
 		case "Common":
 			System.out.println("Common Chosen");

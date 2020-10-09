@@ -11,11 +11,12 @@ public class OptionArray {
 	}
 
 
-	public void add(Option person) {
-		array[index++] = person;
+	public void add(Option option) {
+		array[index++] = option;
 	}
 	
-	public Option[] getPeople(){
+	public Option[] getOption(){
 		return array;
 	}
+	
 }

@@ -28,5 +28,9 @@ public class OptionIter implements Iterator<Option>{
 	public Option next() {
 		return spArray[index++];
 	}
+	
+	public int getSize() {
+		return spArray.length;
+	}
 
 }
