@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 
+
 @XmlRootElement
 public class User {
 
@@ -16,7 +17,7 @@ public class User {
     private String name;
     private String email;
 private String roles;
-    Order order;
+  //  Order order;
 
     public User() {
     }

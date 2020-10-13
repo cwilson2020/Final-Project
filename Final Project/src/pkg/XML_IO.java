@@ -106,13 +106,16 @@ public class XML_IO {
 	
 	public void getEntry() {
 	       DocumentBuilder dBuilder;
-	     
-	            try {
+	   	 try {
+	   		 dBuilder = dbFactory.newDocumentBuilder();
+	   	    Document doc = dBuilder.parse("C://Users//user//Desktop//database.xml");
+		//Document doc = dBuilder.newDocument();
+	           
 					dBuilder = dbFactory.newDocumentBuilder();
 				
 
 	            // parse xml file and load into document
-	            Document doc = dBuilder.parse("C://Users//user//Desktop//database.xml");
+	        
 	           	            
 	            
 		

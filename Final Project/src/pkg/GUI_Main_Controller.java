@@ -37,6 +37,7 @@ public class GUI_Main_Controller {
 		XML_IO x = new XML_IO();
 		//x.launch();
 		x.update();
+		//x.getEntry();
 		
 //	Scene scene = new Scene(gPane,400,400);
 	//	scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
