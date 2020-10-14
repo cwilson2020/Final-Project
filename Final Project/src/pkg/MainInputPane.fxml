@@ -34,10 +34,13 @@
    </rowConstraints>
    <children>
       <RadioButton mnemonicParsing="false" text="New Order" />
-      <RadioButton mnemonicParsing="false" prefHeight="6.0" prefWidth="123.0" text="Existing Order" GridPane.columnIndex="1" />
+      <RadioButton mnemonicParsing="false" prefHeight="6.0" prefWidth="123.0" text="Existing Order" GridPane.rowIndex="1" />
       <ChoiceBox prefWidth="150.0" GridPane.columnIndex="2" />
       <TextField fx:id="tfName" promptText="InsertName" text="Demo Name" GridPane.columnIndex="1" GridPane.rowIndex="6" />
       <Label text="Name" GridPane.rowIndex="6" />
       <Button fx:id="btnButton" mnemonicParsing="false" onAction="#buttonPress" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+      <Button fx:id="btnfile" mnemonicParsing="false" onAction="#singleFileChooser" text="Choose a File" GridPane.columnIndex="1" />
+      <Label fx:id="lblfile" text="No File Chosen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Button fx:id="btnfolder" mnemonicParsing="false" onAction="#directorychooser" text="Choose a folder" GridPane.columnIndex="1" GridPane.rowIndex="1" />
    </children>
 </GridPane>

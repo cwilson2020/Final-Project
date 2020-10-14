@@ -56,7 +56,7 @@ public class JParser {
 			JSONArray ja = new JSONArray();
 			ja.put(record1);
 			//ja.put(holder2);
-Gson gson;
+			Gson gson;
 
 			file.write(record1.toJSONString());
 			file.append(record2.toJSONString());
@@ -72,7 +72,7 @@ Gson gson;
 	public void readRecord() {
 		String location = "C://Users//user//Desktop//database.txt";
 		Gson gson = new Gson();
-		
+
 		String contents = null;
 		Files f;
 		try {
@@ -83,15 +83,15 @@ Gson gson;
 			e.printStackTrace();
 		}
 		System.out.println(contents);
-		
+
 		JsonElement e = gson.fromJson(contents, JsonElement.class);
-	JsonObject jo = e.getAsJsonObject();
-	String result = jo.get("firstname").toString();
-	
-System.out.println(result);
+		JsonObject jo = e.getAsJsonObject();
+		String result = jo.get("trim").toString();
+
+		System.out.println(result);
 
 	}
-	
+
 	public void readLine() {
 		int linecount=0;
 		try {
@@ -101,10 +101,9 @@ System.out.println(result);
 			while((line = br.readLine()) !=null){
 				++linecount;
 				System.out.println(linecount + " "+ line);
-				
+
 			}
-				
-			
+
 			br.close();
 			fr.close();
 		} catch (FileNotFoundException e) {
@@ -114,25 +113,21 @@ System.out.println(result);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-				
-		}
-		
-	
-	
-		public void readbychar() {
+
+
+	}
+
+
+
+	public void readbychar() {
 		int charCount=0;
 		try {
 			FileReader fr = new FileReader("C://Users//user//Desktop//database.txt");
 			int ch;
 			while((ch=fr.read()) !=-1){
 				System.out.println(++charCount +": " + (char)ch);
-				
-			
-				
 			}
-			
-		
+
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -140,5 +135,121 @@ System.out.println(result);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public int JSONCount() {
+		int charCount=0;
+		int JSONCount =0;
+		boolean openBracefound = false;
+		try {
+			FileReader fr = new FileReader("C://Users//user//Desktop//database.txt");
+			int ch;
+			while((ch=fr.read()) !=-1){
+				System.out.println(++charCount +": " + (char)ch);
+				if ((char)ch == '{')
+				{
+					openBracefound = true;
+				}
+
+				if ((char)ch == '}' && openBracefound) {
+					JSONCount++;
+					openBracefound = false;					
+				}
+			}
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return JSONCount;
+	}
+
+
+	public void save(JSONHolder jh) {
+
+
+		try {
+			FileWriter file = new FileWriter("C://Users//user//Desktop//database.txt");
+			JSONIter ji = new JSONIter(jh.getOrder());
+			while (ji.hasNext()) {
+				Order tempOrder = ji.next();
+				String json = new Gson().toJson(tempOrder);
+
+			//	file.write(tempOrder.toString());
+				file.write(json);
+				//file.append(record2.toJSONString());
+				file.flush();
+			
+			}
+			file.close();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
 	
+		
+	}
+/*
+public loadDatabase(String fileName) {
+	CreateOrderArrayfromFile(fileName);
+	
+}
+*/
+
+
+	public Order StringtoObj(String json) {
+		Gson gson = new Gson();
+		Order order = gson.fromJson(json, Order.class); 	
+		return order;
+	}
+
+	public JSONHolder CreateOrderArrayfromFile(String fileName) {
+		int jsonCount = JSONCount();
+		JSONHolder jh = new JSONHolder(jsonCount);
+		String json = new String();
+
+		FileReader fr;
+		try {
+			fr = new FileReader(fileName);
+
+
+			boolean openBracefound = false;
+			int ch;
+
+			while((ch=fr.read()) !=-1){
+				//System.out.println(++charCount +": " + (char)ch);
+				json = json + (char)ch;
+				if ((char)ch == '{')
+				{
+					openBracefound = true;
+				}
+
+
+				if ((char)ch == '}' && openBracefound) {
+
+					openBracefound = false;		
+					jh.add(StringtoObj(json));
+					json ="";
+				}
+			}
+
+			fr.close();
+
+		}catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		return jh;
+	}
+
+
 }
