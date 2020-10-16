@@ -28,16 +28,12 @@ public class GUI_Controller_Trim {
 
 		System.out.println("GUI _Controllerstage TestTrim constructor");
 
-
-
-
 	}
+	
+	
+	@FXML
+	public void initialize() {	
 
-
-
-
-
-	public void Populate() {
 		System.out.println("POPULATE");
 		//Stage stage = (Stage) aPane.getScene().getWindow();
 
@@ -61,8 +57,6 @@ public class GUI_Controller_Trim {
 			list = list + "-" +iter.next().getName() +"\n";
 		}
 		taExtreme.setText(list);
-
-
 	}
 
 
@@ -83,7 +77,6 @@ public class GUI_Controller_Trim {
 			order.setTrim("Value Trim");
 			AppModel.setOrder(order);
 			GUI_Launcher_ValueTrim vp = new GUI_Launcher_ValueTrim(stage);
-
 			break;
 		case "Common":
 			System.out.println("Common Chosen");
@@ -92,7 +85,7 @@ public class GUI_Controller_Trim {
 			System.out.println("Extreme Chosen");
 			break;
 
-		default: 	System.out.println("No Selection Detected");
+		default: System.out.println("No Selection Detected");
 		break;
 		}
 

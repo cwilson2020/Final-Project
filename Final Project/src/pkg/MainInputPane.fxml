@@ -42,7 +42,7 @@
             <ToggleGroup fx:id="new_existing" />
          </toggleGroup></RadioButton>
       <RadioButton fx:id="existingorder" mnemonicParsing="false" prefHeight="6.0" prefWidth="123.0" text="Existing Order" toggleGroup="$new_existing" GridPane.rowIndex="1" />
-      <ChoiceBox fx:id="choicebox" disable="true" prefHeight="25.0" prefWidth="210.0" value="Choose an Order" visible="false" GridPane.columnIndex="4">
+      <ChoiceBox fx:id="choicebox" disable="true" prefHeight="25.0" prefWidth="210.0" value="" visible="false" GridPane.columnIndex="4">
          <effect>
             <Glow />
          </effect></ChoiceBox>

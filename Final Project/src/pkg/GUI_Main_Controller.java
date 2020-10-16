@@ -56,8 +56,10 @@ public class GUI_Main_Controller {
 	public void initialize() {
 		System.out.println("Onload called");
 
-		choicebox.getSelectionModel().selectedItemProperty().addListener((v, OldValue, Newvalue) -> System.out.println("Choicebox changed"));
-		
+		choicebox.getSelectionModel().selectedItemProperty().addListener((v, OldValue, Newvalue) ->{
+					System.out.println("Choicebox changed");
+					ChoiceboxAction();
+	});
 		neworder.selectedProperty().addListener(
 				(ov, old_val, new_val) ->{
 					if(new_val) {
@@ -145,10 +147,15 @@ public class GUI_Main_Controller {
 	}
 
 	public void ChoiceboxAction() {
-		if(!choicebox.getValue().toString().equals("Choose an Order")){
-			Order o = JParser.retrieveOrderByID(jh, choicebox.getValue().toString());
-			tfName.setText(o.getName());
-			appModel.setOrder(o);
+		if(!choicebox.getValue().toString().equals("Select Order")){
+			int index = choicebox.getSelectionModel().getSelectedIndex();
+			Order order = jh.getByIndex(index); 
+		//	Order o = JParser.retrieveOrderByID(jh, choicebox.getValue().toString());
+			tfName.setText(order.getName());
+			appModel.setOrder(order);
+		}
+		else {
+			tfName.setText("");
 		}
 	}
 
@@ -157,7 +164,7 @@ public class GUI_Main_Controller {
 		Stage stage = (Stage)gPane.getScene().getWindow();
 
 
-		if(tfName.getText().equals("Enter Name")){
+		if(tfName.getText().equals("Enter Name") ) {//|| tfName.getText().equals("")){
 			lblwarning.setText("Name Field needs to be properly filled out.");				
 		}
 

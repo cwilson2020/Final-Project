@@ -17,8 +17,6 @@ public class JSONHolder {
 		}
 
 		array[index++] = order;
-
-
 	}
 
 	public Order[] getOrder(){
@@ -39,5 +37,9 @@ public class JSONHolder {
 
 	public void update (int index, Order order) {
 		array[index] = order;
+	}
+
+	public Order getByIndex(int index) {
+		return array[index];
 	}
 }

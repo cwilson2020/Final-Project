@@ -8,7 +8,7 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="aPane" onMouseEntered="#Populate" prefHeight="442.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pkg.GUI_Controller_Trim">
+<AnchorPane fx:id="aPane" prefHeight="442.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pkg.GUI_Controller_Trim">
    <children>
       <Button fx:id="btnNext" layoutX="568.0" layoutY="394.0" mnemonicParsing="false" onAction="#nextButtonAction" text="Next" />
       <Label layoutX="338.0" layoutY="24.0" text="Trim" />

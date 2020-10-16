@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<Pane fx:id="pPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#onMouseOver" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pkg.GUI_Controller_Value_Trim">
+<Pane fx:id="pPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pkg.GUI_Controller_Value_Trim">
    <children>
       <Button fx:id="btnNext" layoutX="377.0" layoutY="304.0" mnemonicParsing="false" onAction="#nextButtonAction" text="Submit" />
       <TextArea fx:id="taOptions" layoutX="20.0" layoutY="43.0" prefHeight="329.0" prefWidth="255.0" />
