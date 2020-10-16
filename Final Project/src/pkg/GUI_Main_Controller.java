@@ -5,13 +5,18 @@ package pkg;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -23,22 +28,58 @@ import javafx.stage.Stage;
 
 public class GUI_Main_Controller {
 
+	private static final boolean debug = true;
 	@FXML TextField tfName;
 	@FXML private GridPane gPane;
 	@FXML  Label lblfile;
+	@FXML  Label lblwarning;
 	@FXML  Button btnfile;
 	@FXML  Button btnfolder;
+	@FXML ChoiceBox<String> choicebox;
+	@FXML RadioButton neworder;
+	@FXML RadioButton existingorder;
+	//@FXML GridPane gPane;
+	String file;
+	String path;
+	JSONHolder jh;
+	AppModel appModel;
 
 
 	public GUI_Main_Controller() {
 
+		//choicebox.getSelectionModel().selectedItemProperty().addListener((v, OldValue, Newvalue) -> System.out.println("change"));
+		appModel = new AppModel();
 	}
 
 
+	@FXML
+	public void initialize() {
+		System.out.println("Onload called");
 
-	public void onLoad() {
+		choicebox.getSelectionModel().selectedItemProperty().addListener((v, OldValue, Newvalue) -> System.out.println("Choicebox changed"));
+		
+		neworder.selectedProperty().addListener(
+				(ov, old_val, new_val) ->{
+					if(new_val) {
+						System.out.println("newOrderSelected");  
+						choicebox.setVisible(false);
+						btnfolder.setVisible(true);
+					}
+				});
+
+
+		existingorder.selectedProperty().addListener(
+				(ov, old_val, new_val) ->{
+					if(new_val) {
+						System.out.println("existing OrderSelected");
+						choicebox.setVisible(true);
+						btnfolder.setVisible(false);
+					}
+				});
 
 	}
+
+
 
 	public void singleFileChooser(ActionEvent event){
 		FileChooser fc = new FileChooser();
@@ -47,7 +88,14 @@ public class GUI_Main_Controller {
 
 		if(f !=null) {
 			lblfile.setText("File: " + f.getAbsolutePath());
+			file =  f.getAbsolutePath();
+			PopulateChoiceBox();
 		}
+		choicebox.setVisible(true);
+		neworder.setVisible(true);
+		existingorder.setVisible(true);
+		appModel.setFile(f);
+
 	}
 
 	public void directorychooser(ActionEvent event){
@@ -59,26 +107,102 @@ public class GUI_Main_Controller {
 		directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
 		File dir = directoryChooser.showDialog(null);
-		String s= dir.getAbsolutePath().toString();
-		System.out.println(s);
+		path = dir.getAbsolutePath().toString();
+		path =  path + "\\database.txt";
+		System.out.println(path);
+		lblfile.setText("File: " + dir.getAbsolutePath());
+		path = dir.getAbsolutePath();
+		FileIO.Createfile(path);
+		appModel.setFile(dir);
+
 	}
 
+
+	public void PopulateChoiceBox() {
+		JParser jp = new JParser();
+		jh = jp.CreateOrderArrayfromFile(file);
+
+		ObservableList<String> list = FXCollections.observableArrayList();
+
+		JSONIter ji = new JSONIter(jh.getOrder());
+
+		while( ji.hasNext()){			
+			Order order =ji.next();
+			list.add(String.valueOf("Order ID: " + order.getId()) );			
+		}
+
+		
+		choicebox.setDisable(false);
+		list.add("Select Order");
+		choicebox.setItems(list);
+		choicebox.setValue("Select Order");
+		appModel.setJh(jh);
+
+	}
+
+	public void existingRadioActions() {
+		btnfolder.setVisible(false);
+	}
+
+	public void ChoiceboxAction() {
+		if(!choicebox.getValue().toString().equals("Choose an Order")){
+			Order o = JParser.retrieveOrderByID(jh, choicebox.getValue().toString());
+			tfName.setText(o.getName());
+			appModel.setOrder(o);
+		}
+	}
+
+
 	public void buttonPress() {
-
-		String s = tfName.getText();
-		System.out.println(s);
-		FileIO fio = new FileIO("C://Users//user//Desktop//database.xml");
-
-		XML_IO x = new XML_IO();
-		//x.launch();
-		x.update();
-		//x.getEntry();
-
-		//	Scene scene = new Scene(gPane,400,400);
-		//	scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		Stage stage = (Stage)gPane.getScene().getWindow();
-		//stage.setScene(scene);
-		stage.close();
+
+
+		if(tfName.getText().equals("Enter Name")){
+			lblwarning.setText("Name Field needs to be properly filled out.");				
+		}
+
+		else if (choicebox.getValue().toString().equals("Select Order")
+				&& existingorder.isSelected())
+
+		{
+			lblwarning.setText("Existing Order must be selected");
+		//	choicebox.setValue("Make a Selection");
+		}
+
+		else if(lblfile.getText().equals("No File Chosen")){
+			lblwarning.setText("A valid file is needed to continue");
+		}
+		
+
+		else {					
+
+			AnchorPane aPane;
+			//GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("MainInputPane.fxml"));
+			try {
+
+				/*GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("MainInputPane.fxml"));
+
+				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				stage.setScene(scene);*/
+				stage.close();
+
+
+
+				aPane = (AnchorPane)FXMLLoader.load(getClass().getResource("Specifics_Entry.fxml"));
+				Scene scene = new Scene(aPane,800,700);
+				//	scene = new Scene(aPane,400,400);
+				//	scene = new Scene(aPane,800,700);
+				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				stage.setScene(scene);
+				stage.show();
+
+
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 	}
 
