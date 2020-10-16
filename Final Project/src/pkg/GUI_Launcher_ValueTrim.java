@@ -36,8 +36,7 @@ public class  GUI_Launcher_ValueTrim{
 
 		try {
 			pPane = (Pane)FXMLLoader.load(getClass().getResource("ValuePackageConfigurator.fxml"));
-			//gPane = (GridPane)FXMLLoader.load(getClass().getResource("ValuePackageConfigurator.fxml"));
-			//	stage = (Stage) fPane.getScene().getWindow();
+	
 			Scene scene = new Scene(pPane,800,700);
 
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());

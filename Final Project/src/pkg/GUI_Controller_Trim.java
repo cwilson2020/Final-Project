@@ -19,18 +19,22 @@ public class GUI_Controller_Trim {
 	@FXML private ToggleGroup trimToggleGroup;
 
 	@FXML private AnchorPane aPane;
-	//@FXML Stage stage;
+	AppModel appModel;
 	Stage stage;
 
-	/*	public GUI_Controller_Trim(Stage stage) {
-		this.stage = stage;
 
-	}*/
+
 	public GUI_Controller_Trim() {
 
 		System.out.println("GUI _Controllerstage TestTrim constructor");
 
+
+
+
 	}
+
+
+
 
 
 	public void Populate() {
@@ -75,8 +79,11 @@ public class GUI_Controller_Trim {
 		switch(whichButton) {
 		case "Value":
 			System.out.println("Value Chosen");
+			Order order = AppModel.getOrder();
+			order.setTrim("Value Trim");
+			AppModel.setOrder(order);
 			GUI_Launcher_ValueTrim vp = new GUI_Launcher_ValueTrim(stage);
-			
+
 			break;
 		case "Common":
 			System.out.println("Common Chosen");

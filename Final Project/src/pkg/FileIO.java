@@ -50,7 +50,7 @@ public class FileIO {
 			return false;
 	}
 
-	public boolean Createfile(String path) {
+	public static boolean Createfile(String path) {
 		boolean result = false;
 		try {
 			File myObj = new File(path);

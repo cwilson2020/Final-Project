@@ -5,15 +5,19 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="gPane" prefHeight="316.0" prefWidth="423.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pkg.GUI_Main_Controller">
+<GridPane fx:id="gPane" onMouseDragOver="#ChoiceboxAction" onMouseDragReleased="#ChoiceboxAction" prefHeight="453.0" prefWidth="733.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pkg.GUI_Main_Controller">
    <columnConstraints>
       <ColumnConstraints maxWidth="109.0" minWidth="85.0" prefWidth="107.0" />
       <ColumnConstraints maxWidth="203.0" minWidth="119.0" prefWidth="203.0" />
-      <ColumnConstraints maxWidth="145.0" minWidth="68.0" prefWidth="68.0" />
+      <ColumnConstraints maxWidth="203.0" minWidth="65.0" prefWidth="65.0" />
+      <ColumnConstraints maxWidth="316.0" minWidth="119.0" prefWidth="158.0" />
+      <ColumnConstraints maxWidth="218.0" minWidth="68.0" prefWidth="218.0" />
    </columnConstraints>
    <rowConstraints>
       <RowConstraints />
@@ -33,14 +37,22 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" />
    </rowConstraints>
    <children>
-      <RadioButton mnemonicParsing="false" text="New Order" />
-      <RadioButton mnemonicParsing="false" prefHeight="6.0" prefWidth="123.0" text="Existing Order" GridPane.rowIndex="1" />
-      <ChoiceBox prefWidth="150.0" GridPane.columnIndex="2" />
-      <TextField fx:id="tfName" promptText="InsertName" text="Demo Name" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-      <Label text="Name" GridPane.rowIndex="6" />
+      <RadioButton fx:id="neworder" mnemonicParsing="false" selected="true" text="New Order">
+         <toggleGroup>
+            <ToggleGroup fx:id="new_existing" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="existingorder" mnemonicParsing="false" prefHeight="6.0" prefWidth="123.0" text="Existing Order" toggleGroup="$new_existing" GridPane.rowIndex="1" />
+      <ChoiceBox fx:id="choicebox" disable="true" prefHeight="25.0" prefWidth="210.0" value="Choose an Order" visible="false" GridPane.columnIndex="4">
+         <effect>
+            <Glow />
+         </effect></ChoiceBox>
+      <TextField fx:id="tfName" promptText="Insert Name" text="Enter Name" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+      <Label text="Name" GridPane.rowIndex="11" />
       <Button fx:id="btnButton" mnemonicParsing="false" onAction="#buttonPress" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="13" />
-      <Button fx:id="btnfile" mnemonicParsing="false" onAction="#singleFileChooser" text="Choose a File" GridPane.columnIndex="1" />
-      <Label fx:id="lblfile" text="No File Chosen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Button fx:id="btnfolder" mnemonicParsing="false" onAction="#directorychooser" text="Choose a folder" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Button fx:id="btnfile" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#singleFileChooser" prefHeight="25.0" prefWidth="149.0" text="Select Data Base File" GridPane.columnIndex="1" />
+      <Label fx:id="lblfile" prefHeight="17.0" prefWidth="195.0" text="No File Chosen" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Button fx:id="btnfolder" mnemonicParsing="false" onAction="#directorychooser" prefHeight="25.0" prefWidth="132.0" text="Create New File" GridPane.columnIndex="3" />
+      <Label alignment="CENTER" text="Or" GridPane.columnIndex="2" />
+      <Label fx:id="lblwarning" prefHeight="17.0" prefWidth="224.0" textFill="#e40b0b" GridPane.columnIndex="1" GridPane.rowIndex="14" />
    </children>
 </GridPane>

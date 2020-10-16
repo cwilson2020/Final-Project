@@ -1,11 +1,11 @@
 package pkg;
 
 public class Order {
-		int Id;
-		String name;
-		String trim;
-		String[] options;
-		int price;
+		private int Id;
+		private String name;
+		private String trim;
+		private String[] options;
+		private int price;
 		
 	public Order() {
 

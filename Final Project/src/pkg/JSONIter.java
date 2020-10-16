@@ -28,5 +28,5 @@ public class JSONIter implements Iterator<Order>{
 	public Order next() {
 		return orderArray[index++];
 	}
-
+	
 }

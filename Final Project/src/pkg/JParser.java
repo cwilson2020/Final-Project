@@ -179,27 +179,41 @@ public class JParser {
 				Order tempOrder = ji.next();
 				String json = new Gson().toJson(tempOrder);
 
-			//	file.write(tempOrder.toString());
+				//	file.write(tempOrder.toString());
 				file.write(json);
 				//file.append(record2.toJSONString());
 				file.flush();
-			
+
 			}
 			file.close();
 		} catch (IOException e) {
 
 			e.printStackTrace();
 		}
-	
-		
+
+
 	}
-/*
+	/*
 public loadDatabase(String fileName) {
 	CreateOrderArrayfromFile(fileName);
-	
-}
-*/
 
+}
+	 */
+	static Order retrieveOrderByID(JSONHolder jh, String id){
+
+		JSONIter ji = new JSONIter(jh.getOrder());
+		boolean exit = false;
+		Order tempOrder = null;
+		while (ji.hasNext() && !exit) {
+			tempOrder = ji.next();
+			if(tempOrder.getId() == Integer.valueOf(id)) {
+				exit = true;
+			}
+
+		}	
+		return tempOrder;
+
+	}
 
 	public Order StringtoObj(String json) {
 		Gson gson = new Gson();
