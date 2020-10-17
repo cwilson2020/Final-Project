@@ -7,6 +7,7 @@ public class AppModel {
 	private static JSONHolder jh;
 	private static Order order;
 	private static File file;
+	private static String current_user;
 
 	public AppModel() {
 		// TODO Auto-generated constructor stub
@@ -34,6 +35,12 @@ public class AppModel {
 	}
 	public static void setFile(File file) {
 		AppModel.file = file;
+	}
+	public static String getCurrent_user() {
+		return current_user;
+	}
+	public static void setCurrent_user(String current_user) {
+		AppModel.current_user = current_user;
 	}
 
 

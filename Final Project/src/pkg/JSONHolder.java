@@ -34,6 +34,20 @@ public class JSONHolder {
 		System.arraycopy(tempArray,0, array, 0, tempArray.length);				
 
 	}
+	public int getOrderIndexByID(int id) {
+		boolean found = false;
+		int ret = -1; 
+		int i =0;
+		while(i <array.length && !found) {
+			if(array[i].getId() == id) {
+				found = true;
+				ret =i;
+			}
+			i++;
+		}
+		return ret;
+		
+	}
 
 	public void update (int index, Order order) {
 		array[index] = order;

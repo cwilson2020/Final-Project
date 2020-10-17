@@ -29,8 +29,8 @@ public class GUI_Controller_Trim {
 		System.out.println("GUI _Controllerstage TestTrim constructor");
 
 	}
-	
-	
+
+
 	@FXML
 	public void initialize() {	
 
@@ -69,20 +69,30 @@ public class GUI_Controller_Trim {
 		String whichButton = selection.getText();
 		System.out.println(whichButton);
 
+		Order order;
+
 
 		switch(whichButton) {
 		case "Value":
 			System.out.println("Value Chosen");
-			Order order = AppModel.getOrder();
-			order.setTrim("Value Trim");
+			order = AppModel.getOrder();
+			order.setTrim("Value");
 			AppModel.setOrder(order);
 			GUI_Launcher_ValueTrim vp = new GUI_Launcher_ValueTrim(stage);
 			break;
 		case "Common":
-			System.out.println("Common Chosen");
+			System.out.println("Common Chosen");		
+			order = AppModel.getOrder();
+			order.setTrim("Common");
+			AppModel.setOrder(order);
+			//	GUI_Launcher_CommonTrim cp = new GUI_Launcher_ValueTrim(stage);
 			break;
 		case "Extreme":
-			System.out.println("Extreme Chosen");
+			System.out.println("Extreme Chosen");	
+			order = AppModel.getOrder();
+			order.setTrim("Extreme");
+			AppModel.setOrder(order);
+			//	GUI_Launcher_ExtremeTrim ep = new GUI_Launcher_ValueTrim(stage);
 			break;
 
 		default: System.out.println("No Selection Detected");

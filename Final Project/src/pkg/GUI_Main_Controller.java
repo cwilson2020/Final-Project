@@ -31,56 +31,110 @@ public class GUI_Main_Controller {
 	private static final boolean debug = true;
 	@FXML TextField tfName;
 	@FXML private GridPane gPane;
-	@FXML  Label lblfile;
-	@FXML  Label lblwarning;
-	@FXML  Button btnfile;
-	@FXML  Button btnfolder;
+	@FXML Label lblfile;
+	@FXML Label lblwarning;
+	@FXML Button btnfile;
+	@FXML Button btnfolder;
+	@FXML Button btnButton;
 	@FXML ChoiceBox<String> choicebox;
 	@FXML RadioButton neworder;
 	@FXML RadioButton existingorder;
+	@FXML RadioButton radiocustomer;
+	@FXML RadioButton radiodealer;
+	@FXML Label lblName;
+
+
+	//@FXML ChoiceBox choicebox;
+
 	//@FXML GridPane gPane;
 	String file;
 	String path;
 	JSONHolder jh;
-	AppModel appModel;
+	//AppModel appModel;
 
 
 	public GUI_Main_Controller() {
 
 		//choicebox.getSelectionModel().selectedItemProperty().addListener((v, OldValue, Newvalue) -> System.out.println("change"));
-		appModel = new AppModel();
+		//	appModel = new AppModel();
 	}
 
 
 	@FXML
 	public void initialize() {
+
 		System.out.println("Onload called");
+		
+		lblfile.setVisible(false);	
+		btnfile.setVisible(false);
+		neworder.setVisible(false);{
+			existingorder.setVisible(false);
+			btnfolder.setVisible(false);
+			choicebox.setVisible(false);
+			tfName.setVisible(false);
+			btnButton.setVisible(false);
+			lblName.setVisible(false);
 
-		choicebox.getSelectionModel().selectedItemProperty().addListener((v, OldValue, Newvalue) ->{
-					System.out.println("Choicebox changed");
-					ChoiceboxAction();
-	});
-		neworder.selectedProperty().addListener(
-				(ov, old_val, new_val) ->{
-					if(new_val) {
-						System.out.println("newOrderSelected");  
-						choicebox.setVisible(false);
-						btnfolder.setVisible(true);
-					}
-				});
+			choicebox.getSelectionModel().selectedItemProperty().addListener((v, OldValue, Newvalue) ->{
+				System.out.println("Choicebox changed");
+				ChoiceboxAction();
+			});
+			neworder.selectedProperty().addListener(
+					(ov, old_val, new_val) ->{
+						if(new_val) {
+							System.out.println("newOrderSelected");  
+							choicebox.setVisible(false);
+							btnfolder.setVisible(true);
+							tfName.setDisable(false);
+						}
+					});
 
 
-		existingorder.selectedProperty().addListener(
-				(ov, old_val, new_val) ->{
-					if(new_val) {
-						System.out.println("existing OrderSelected");
-						choicebox.setVisible(true);
-						btnfolder.setVisible(false);
-					}
-				});
+			existingorder.selectedProperty().addListener(
+					(ov, old_val, new_val) ->{
+						if(new_val) {
+							System.out.println("existing OrderSelected");
+							choicebox.setVisible(true);
+							btnfolder.setVisible(false);
+							tfName.setDisable(true);
+						}
+					});
 
+			radiocustomer.selectedProperty().addListener((ov,old_val, new_val) ->{			 		
+				lblfile.setVisible(true);
+				tfName.setVisible(true);
+				tfName.setDisable(false);
+				btnfile.setVisible(true);
+
+				if (neworder.isSelected()){
+					btnfolder.setVisible(true);
+					choicebox.setVisible(false);
+				}
+				else {
+					btnfolder.setVisible(false);
+					choicebox.setVisible(true);
+				}
+				neworder.setVisible(true);
+				existingorder.setVisible(true);
+
+			});
+
+			radiodealer.selectedProperty().addListener((ov,old_val, new_val) ->{			 		
+				lblName.setVisible(true);	
+				lblfile.setVisible(true);	
+				btnfile.setVisible(true);
+				neworder.setVisible(false);
+				existingorder.setVisible(false);
+				btnfolder.setVisible(true);
+				//choicebox.setVisible(true);
+				tfName.setVisible(true);
+				tfName.setDisable(true);
+
+
+			});
+
+		}
 	}
-
 
 
 	public void singleFileChooser(ActionEvent event){
@@ -94,9 +148,9 @@ public class GUI_Main_Controller {
 			PopulateChoiceBox();
 		}
 		choicebox.setVisible(true);
-		neworder.setVisible(true);
-		existingorder.setVisible(true);
-		appModel.setFile(f);
+		//neworder.setVisible(true);
+		//existingorder.setVisible(true);
+		AppModel.setFile(f);
 
 	}
 
@@ -115,7 +169,7 @@ public class GUI_Main_Controller {
 		lblfile.setText("File: " + dir.getAbsolutePath());
 		path = dir.getAbsolutePath();
 		FileIO.Createfile(path);
-		appModel.setFile(dir);
+		AppModel.setFile(dir);
 
 	}
 
@@ -133,12 +187,12 @@ public class GUI_Main_Controller {
 			list.add(String.valueOf("Order ID: " + order.getId()) );			
 		}
 
-		
+
 		choicebox.setDisable(false);
 		list.add("Select Order");
 		choicebox.setItems(list);
 		choicebox.setValue("Select Order");
-		appModel.setJh(jh);
+		AppModel.setJh(jh);
 
 	}
 
@@ -147,12 +201,12 @@ public class GUI_Main_Controller {
 	}
 
 	public void ChoiceboxAction() {
-		if(!choicebox.getValue().toString().equals("Select Order")){
+		if(!choicebox.getValue().toString().equals("Select Order") && (choicebox.getValue()!= null)){
 			int index = choicebox.getSelectionModel().getSelectedIndex();
 			Order order = jh.getByIndex(index); 
-		//	Order o = JParser.retrieveOrderByID(jh, choicebox.getValue().toString());
+			//	Order o = JParser.retrieveOrderByID(jh, choicebox.getValue().toString());
 			tfName.setText(order.getName());
-			appModel.setOrder(order);
+			AppModel.setOrder(order);
 		}
 		else {
 			tfName.setText("");
@@ -173,15 +227,28 @@ public class GUI_Main_Controller {
 
 		{
 			lblwarning.setText("Existing Order must be selected");
-		//	choicebox.setValue("Make a Selection");
+			//	choicebox.setValue("Make a Selection");
 		}
 
 		else if(lblfile.getText().equals("No File Chosen")){
 			lblwarning.setText("A valid file is needed to continue");
 		}
-		
 
-		else {					
+
+		else {		
+			String user;
+			String status;
+			OrderInfo oi = new OrderProxy();
+			if(radiodealer.isSelected())
+			user="Dealer";
+			else user="Customer";
+			
+			if(neworder.isSelected())
+				status = "Open";
+			else
+				status = AppModel.getOrder().getStatus();				
+			oi.setstatus(user, status);
+			
 
 			AnchorPane aPane;
 			//GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("MainInputPane.fxml"));

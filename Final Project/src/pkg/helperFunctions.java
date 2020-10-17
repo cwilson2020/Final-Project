@@ -36,5 +36,21 @@ public class helperFunctions {
 		array.add(new Option("Premium Paint",800, 1250, "Extreme Paint w/ Decals"));
 		return array;		
 	}
+	
+	
+	public static int SearchArray(String [] array, String string) {
+		int ret = -1;
+		int count = 0;
+		boolean found = false;
+		 while(!found && count< array.length ) {
+			if( array[count].contains(string)){
+				found = true;
+				ret =count;
+			}
+			count++;
+		 }
+		return ret;	
+		
+	}
 
 }

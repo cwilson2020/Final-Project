@@ -101,7 +101,6 @@ public class JParser {
 			while((line = br.readLine()) !=null){
 				++linecount;
 				System.out.println(linecount + " "+ line);
-
 			}
 
 			br.close();
@@ -113,8 +112,6 @@ public class JParser {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-
 	}
 
 
@@ -169,11 +166,11 @@ public class JParser {
 	}
 
 
-	public void save(JSONHolder jh) {
+	public static void save(JSONHolder jh, String location) {
 
 
 		try {
-			FileWriter file = new FileWriter("C://Users//user//Desktop//database.txt");
+			FileWriter file = new FileWriter(location);
 			JSONIter ji = new JSONIter(jh.getOrder());
 			while (ji.hasNext()) {
 				Order tempOrder = ji.next();
@@ -190,7 +187,7 @@ public class JParser {
 
 			e.printStackTrace();
 		}
-
+		System.out.println("File Saved");
 
 	}
 	/*

@@ -1,12 +1,24 @@
 package pkg;
 
 public class Order {
-		private int Id;
-		private String name;
-		private String trim;
-		private String[] options;
-		private int price;
-		
+	
+	private int Id;
+	private String name;
+	private String trim;
+	private String[] options;
+	private int price;
+	private String status;
+	
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	
 	public Order() {
 
 	}
