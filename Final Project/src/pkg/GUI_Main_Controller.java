@@ -6,6 +6,7 @@ package pkg;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,7 +43,8 @@ public class GUI_Main_Controller {
 	@FXML RadioButton radiocustomer;
 	@FXML RadioButton radiodealer;
 	@FXML Label lblName;
-
+	String warning;
+	static OrderStateBase state = new OrderStateBase();
 
 	//@FXML ChoiceBox choicebox;
 
@@ -55,8 +57,6 @@ public class GUI_Main_Controller {
 
 	public GUI_Main_Controller() {
 
-		//choicebox.getSelectionModel().selectedItemProperty().addListener((v, OldValue, Newvalue) -> System.out.println("change"));
-		//	appModel = new AppModel();
 	}
 
 
@@ -64,7 +64,7 @@ public class GUI_Main_Controller {
 	public void initialize() {
 
 		System.out.println("Onload called");
-		
+
 		lblfile.setVisible(false);	
 		btnfile.setVisible(false);
 		neworder.setVisible(false);{
@@ -129,10 +129,7 @@ public class GUI_Main_Controller {
 				//choicebox.setVisible(true);
 				tfName.setVisible(true);
 				tfName.setDisable(true);
-
-
 			});
-
 		}
 	}
 
@@ -148,6 +145,7 @@ public class GUI_Main_Controller {
 			PopulateChoiceBox();
 		}
 		choicebox.setVisible(true);
+		btnButton.setVisible(true);
 		//neworder.setVisible(true);
 		//existingorder.setVisible(true);
 		AppModel.setFile(f);
@@ -157,7 +155,7 @@ public class GUI_Main_Controller {
 	public void directorychooser(ActionEvent event){
 		DirectoryChooser directoryChooser = new DirectoryChooser();
 		// Set title for DirectoryChooser
-		directoryChooser.setTitle("Select Some Directories");
+		directoryChooser.setTitle("Select a folder for you new database...");
 
 		// Set Initial Directory
 		directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -167,9 +165,11 @@ public class GUI_Main_Controller {
 		path =  path + "\\database.txt";
 		System.out.println(path);
 		lblfile.setText("File: " + dir.getAbsolutePath());
-		path = dir.getAbsolutePath();
+		//path = dir.getAbsolutePath();
 		FileIO.Createfile(path);
-		AppModel.setFile(dir);
+		btnButton.setVisible(true);
+		File file = new File(path);
+		AppModel.setFile(file);
 
 	}
 
@@ -214,7 +214,7 @@ public class GUI_Main_Controller {
 	}
 
 
-	public void buttonPress() {
+	public void nextButton() {
 		Stage stage = (Stage)gPane.getScene().getWindow();
 
 
@@ -222,8 +222,9 @@ public class GUI_Main_Controller {
 			lblwarning.setText("Name Field needs to be properly filled out.");				
 		}
 
-		else if (choicebox.getValue().toString().equals("Select Order")
-				&& existingorder.isSelected())
+		else if (existingorder.isSelected() 
+				&& choicebox.getValue().toString() !=null
+				&& choicebox.getValue().toString().equals("Select Order"))
 
 		{
 			lblwarning.setText("Existing Order must be selected");
@@ -239,16 +240,37 @@ public class GUI_Main_Controller {
 			String user;
 			String status;
 			OrderInfo oi = new OrderProxy();
-			if(radiodealer.isSelected())
-			user="Dealer";
-			else user="Customer";
-			
-			if(neworder.isSelected())
-				status = "Open";
-			else
-				status = AppModel.getOrder().getStatus();				
+			if(radiodealer.isSelected()) {			
+				user="Dealer";
+				AppModel.setCurrent_user(user);
+			}
+			else {
+				user="Customer";
+				AppModel.setCurrent_user(user);
+			}
+
+			if(neworder.isSelected()) {
+				Order order = new Order();
+				order.setStatus("Editing");
+				order.setName(tfName.getText());
+				status = "Editing";
+				Random rand =  new Random();
+				int id = rand.nextInt((9999 -100)+1)+10;
+				order.setId(id);
+				OrderActions oa = state.getEditOrder();
+				state.setOrderState(oa);
+				AppModel.setOrder(order);
+				AppModel.setNewOrder(true);
+				JSONHolder jh  = new JSONHolder(1);
+				AppModel.setJh(jh);
+			}
+			else {
+				status = AppModel.getOrder().getStatus();	
+				AppModel.setNewOrder(true);
+			}
+
 			oi.setstatus(user, status);
-			
+
 
 			AnchorPane aPane;
 			//GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("MainInputPane.fxml"));
@@ -268,6 +290,7 @@ public class GUI_Main_Controller {
 				//	scene = new Scene(aPane,800,700);
 				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 				stage.setScene(scene);
+				state.editOrder();
 				stage.show();
 
 
@@ -279,7 +302,16 @@ public class GUI_Main_Controller {
 		}
 
 	}
+	public void cancelOrder() {	
+		warning = state.cancelOrder();
+		lblwarning.setText(warning); 
 
+	}
+
+	public void fulfillOrder() {	
+		warning = state.fulfillOrder();
+		lblwarning.setText(warning);
+	}
 
 
 }

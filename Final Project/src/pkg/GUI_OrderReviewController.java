@@ -35,10 +35,8 @@ public class GUI_OrderReviewController {
 	public void initialize() {	
 		System.out.println("initialized");
 
-
 		String list =  new String();
 		String trim = AppModel.getOrder().getTrim();
-
 
 		OptionIter iter = new OptionIter(helperFunctions.buildFactoryOptions().getOption());
 
@@ -49,8 +47,12 @@ public class GUI_OrderReviewController {
 			while (iter.hasNext()){
 				list = list + "-" +iter.next().getName() +"\n";			
 			}
+			list = list + "\nOptions:";
 			for(String s : AppModel.getOrder().getOptions())
-				list = list + " " +s;		
+				list = list + "\n" +s;	
+			
+		//	String[] s = AppModel.getOrder().getOptions();
+			
 			break;
 		case "Common":
 			System.out.println("Common Chosen");
@@ -81,25 +83,29 @@ public class GUI_OrderReviewController {
 	}
 
 	public void submit() {
-		
+
 		String user;
 		String status;
 		OrderInfo oi = new OrderProxy();
-		user="Dealer";
-		else user="Customer";
-		
-		if(neworder.isSelected())
-			status = "Open";
-		else
-			status = AppModel.getOrder().getStatus();				
+		user=AppModel.getCurrent_user();
+
+
+		status = AppModel.getOrder().getStatus();				
 		oi.setstatus(user, status);
 
+		int id =AppModel.getOrder().getId();
+		int index = AppModel.getJh().getOrderIndexByID(id);
+		
+		if((index !=-1)) {
+			AppModel.getJh().update(index, AppModel.getOrder());			
+		}
+		
 		JParser.save(AppModel.getJh(), AppModel.getFile().getAbsolutePath());
 
 		System.out.println("Submitted");
 
-
-		lblmsg.setText("Submitting Order  Please wait");
+		btnsubmit.setVisible(false);
+		lblmsg.setText("Submitting Order  Please wait.....");
 
 
 
@@ -116,17 +122,14 @@ public class GUI_OrderReviewController {
 		sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
-					btnsubmit.setVisible(false);
-					lblmsg.setVisible(false);
-		btnclose.setVisible(true);
-		btnclose.setDisable(false);
-				
+				btnsubmit.setVisible(false);
+				lblmsg.setVisible(false);
+				btnclose.setVisible(true);
+				btnclose.setDisable(false);
+
 			}
 		});
 		new Thread(sleeper).start();
-
-	
-
 	}
 
 	public void close() {
@@ -134,44 +137,31 @@ public class GUI_OrderReviewController {
 		stage.close();
 	}
 
-	public void BackButtom() {
+	public void BackButton() {
 
 		Pane pPane;	
-Stage stage =  (Stage)gp.getScene().getWindow();	
-			stage.close();
-			
-			
-			AnchorPane aPane;
-			try {
-				aPane = (AnchorPane)FXMLLoader.load(getClass().getResource("Specifics_Entry.fxml"));
-			
+		Stage stage =  (Stage)gp.getScene().getWindow();	
+		stage.close();
+
+
+		AnchorPane aPane;
+		try {
+			aPane = (AnchorPane)FXMLLoader.load(getClass().getResource("Specifics_Entry.fxml"));
+
 			Scene scene = new Scene(aPane,800,700);
-			//	scene = new Scene(aPane,400,400);
-			//	scene = new Scene(aPane,800,700);
+
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			stage.setScene(scene);
 			stage.show();
-			
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}			
 
-		/*		
-			pPane = (Pane)FXMLLoader.load(getClass().getResource("ValuePackageConfigurator.fxml"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}			
 
-			 scene = new Scene(pPane,800,700);
-
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			stage = (Stage)pPane.getScene().getWindow();
-			stage.setTitle("Value Package Option Menu");
-
-			stage.setScene(scene);
-
-			stage.show();
-*/
-		}
 	
+	}
+
 
 
 }

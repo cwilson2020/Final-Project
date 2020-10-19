@@ -21,7 +21,7 @@
    <children>
       <TextArea fx:id="ta" editable="false" prefHeight="274.0" prefWidth="327.0" />
       <Button fx:id="btnsubmit" mnemonicParsing="false" onAction="#submit" text="Submit" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-      <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#BackButtom" text="Go Back" GridPane.rowIndex="1" />
+      <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#BackButton" text="Go Back" GridPane.rowIndex="1" />
       <Label fx:id="lblmsg" alignment="BOTTOM_CENTER" onDragDetected="#close" prefHeight="17.0" prefWidth="236.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <Button fx:id="btnclose" alignment="CENTER" disable="true" mnemonicParsing="false" text="Close" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
    </children>

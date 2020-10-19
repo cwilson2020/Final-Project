@@ -1,32 +1,47 @@
 package pkg;
 
-public abstract class Trim {
-	private String trim;
-	private double price;
-	private String contentsList;
+public interface Trim {
 
-
-
-	public String getTrim() {
-		return trim;
-	}
-	public void setTrim(String trim) {
-		this.trim = trim;
-	}
-	public double getPrice() {
-		return price;
-	}
-	public void setPrice(double price) {
-		this.price = price;
-	}
-	public String getContentsList() {
-		return contentsList;
-	}
-	public void setContentsList(String contentsList) {
-		this.contentsList = contentsList;
-	}
-
-
-
-
+	String getTrim();
+	int getPrice();	
 }
+
+class Value_Type implements Trim{
+
+	@Override
+	public String getTrim() {	
+		return "Value";
+	}
+
+	@Override
+	public int getPrice() {
+		return 25000;
+	}
+}
+
+class Common_Type implements Trim{
+
+	@Override
+	public String getTrim() {	
+		return "Common";
+	}
+
+	@Override
+	public int getPrice() {
+		return 30000;
+	}
+}
+
+class Extreme_Type implements Trim{
+
+	@Override
+	public String getTrim() {	
+		return "Extreme";
+	}
+
+	@Override
+	public int getPrice() {
+		return 56000;
+	}
+}
+

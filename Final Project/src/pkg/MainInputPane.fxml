@@ -12,8 +12,8 @@
 
 <GridPane fx:id="gPane" onMouseDragOver="#ChoiceboxAction" onMouseDragReleased="#ChoiceboxAction" prefHeight="333.0" prefWidth="569.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pkg.GUI_Main_Controller">
    <columnConstraints>
-      <ColumnConstraints maxWidth="109.0" minWidth="85.0" prefWidth="107.0" />
-      <ColumnConstraints maxWidth="203.0" minWidth="119.0" prefWidth="203.0" />
+      <ColumnConstraints maxWidth="157.0" minWidth="85.0" prefWidth="157.0" />
+      <ColumnConstraints maxWidth="203.0" minWidth="119.0" prefWidth="153.0" />
       <ColumnConstraints maxWidth="203.0" minWidth="65.0" prefWidth="65.0" />
       <ColumnConstraints maxWidth="316.0" minWidth="119.0" prefWidth="158.0" />
    </columnConstraints>
@@ -43,12 +43,12 @@
       <RadioButton fx:id="existingorder" mnemonicParsing="false" prefHeight="6.0" prefWidth="123.0" text="Existing Order" toggleGroup="$new_existing" GridPane.rowIndex="2" />
       <TextField fx:id="tfName" promptText="Insert Name" text="Enter Name" GridPane.columnIndex="1" GridPane.rowIndex="12" />
       <Label fx:id="lblName" text="Name" GridPane.rowIndex="12" />
-      <Button fx:id="btnButton" mnemonicParsing="false" onAction="#buttonPress" text="Next" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+      <Button fx:id="btnButton" mnemonicParsing="false" onAction="#nextButton" text="Edit/ Review Order" GridPane.rowIndex="14" />
       <Button fx:id="btnfile" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#singleFileChooser" prefHeight="25.0" prefWidth="149.0" text="Select Data Base File" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <Label fx:id="lblfile" prefHeight="17.0" prefWidth="195.0" text="No File Chosen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Button fx:id="btnfolder" mnemonicParsing="false" onAction="#directorychooser" prefHeight="25.0" prefWidth="132.0" text="Create New File" GridPane.columnIndex="3" GridPane.rowIndex="1" />
       <Label alignment="CENTER" text="Or" GridPane.columnIndex="2" />
-      <Label fx:id="lblwarning" prefHeight="17.0" prefWidth="224.0" textFill="#e40b0b" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+      <Label fx:id="lblwarning" prefHeight="17.0" prefWidth="254.0" textFill="#e40b0b" GridPane.columnIndex="1" GridPane.rowIndex="15" />
       <RadioButton fx:id="radiocustomer" mnemonicParsing="false" text="I am a customer" GridPane.columnIndex="1">
          <toggleGroup>
             <ToggleGroup fx:id="customer_dealer" />
@@ -56,5 +56,7 @@
       </RadioButton>
       <RadioButton fx:id="radiodealer" mnemonicParsing="false" text="I am a dealer" toggleGroup="$customer_dealer" GridPane.columnIndex="3" />
       <ChoiceBox fx:id="choicebox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+      <Button fx:id="buttoncancel" mnemonicParsing="false" onAction="#cancelOrder" text="Cancel Order" GridPane.columnIndex="3" GridPane.rowIndex="14" />
+      <Button fx:id="btnfulfil" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" snapToPixel="false" text="Fulfill Order" GridPane.columnIndex="1" GridPane.rowIndex="14" />
    </children>
 </GridPane>

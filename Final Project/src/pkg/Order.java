@@ -8,7 +8,7 @@ public class Order {
 	private String[] options;
 	private int price;
 	private String status;
-	
+	private int option_price;
 	
 	public String getStatus() {
 		return status;
@@ -61,6 +61,14 @@ public class Order {
 
 	public void setPrice(int price) {
 		this.price = price;
+	}
+
+	public int getOption_price() {
+		return option_price;
+	}
+
+	public void setOption_price(int option_price) {
+		this.option_price = option_price;
 	}
 
 }

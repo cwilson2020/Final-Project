@@ -17,7 +17,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class GUI_Controller_Value_Trim {
+public class GUI_Controller_Common_Trim {
 	@FXML private TextArea taValue;
 	@FXML private TextArea taCommon;
 	//	@FXML private TextArea taExtreme;
@@ -36,18 +36,16 @@ public class GUI_Controller_Value_Trim {
 	@FXML private AnchorPane aPane;
 
 	Stage stage;
-	private int optionTotal;
-	ArrayList<String> al;
-	private Trim trim;
 
-	public GUI_Controller_Value_Trim() {
+	ArrayList<String> al;
+
+	public GUI_Controller_Common_Trim() {
 	
 		System.out.println("GUI _Controller Value Trim constructor");
 	}
 
 	public void onCheckbox() {
-		optionTotal = 0;
-		al = new  ArrayList<String>();
+		al = new  ArrayList<String> ();
 		String list =  new String();
 		OptionIter iter = new OptionIter(helperFunctions.buildFactoryOptions().getOption());
 		while (iter.hasNext()){
@@ -59,20 +57,17 @@ public class GUI_Controller_Value_Trim {
 		{
 			list = list + cb1.getText()+"\n";
 			al.add( cb1.getText());
-			optionTotal += 1500;			
 		}
 
 		if (cb2.isSelected())
 		{
 			list = list +cb2.getText()+"\n";
 			al.add( cb2.getText());
-			optionTotal += 500;
 		}
 		if (cb3.isSelected())
 		{
 			list = list + cb3.getText()+"\n";
 			al.add( cb3.getText());
-			optionTotal += 300;
 		}		
 		if (cb4.isSelected())
 		{
@@ -85,21 +80,17 @@ public class GUI_Controller_Value_Trim {
 			al.add( cb5.getText());
 		}
 
-		list+="-----------------------\n"
-				+"Trim Price:" + String.valueOf(new Value_Type().getPrice()) +"\n"
-				+ "Option Total: "+ String.valueOf(optionTotal) +"\n"
-		+ "Total Price: " + String.valueOf(optionTotal + new Value_Type().getPrice());
 		taOptions.setText(list);
-	
+		//AppModel.getOrder().se	
 	}
 
 
 	@FXML
 	public void initialize() {	
 		System.out.println("initialized");
-		cb1.setText("Race Engine Upgrade $1500");
-		cb2.setText("Wheel Upgrade $500 ");
-		cb3.setText("Leather Seats $300");
+		cb1.setText("Race Engine Upgrade");
+		cb2.setText("Wheel Upgrade ");
+		cb3.setText("Leather Seats");
 		cb4.setVisible(false);
 		cb5.setVisible(false);
 		cb6.setVisible(false);
@@ -117,29 +108,25 @@ public class GUI_Controller_Value_Trim {
 			if (helperFunctions.SearchArray(options, cb1.getText()) !=-1) {
 				cb1.setSelected(true);
 				list = list + "\n" +cb1.getText();
-				optionTotal += 1500;
 			}
 
 			if (helperFunctions.SearchArray(options, cb2.getText()) !=-1) {
 				cb2.setSelected(true);
 				list = list + "\n" +cb2.getText();
-				optionTotal += 500;
 			}
 
 			if (helperFunctions.SearchArray(options, cb3.getText()) !=-1) {
 				cb3.setSelected(true);
 				list = list + "\n" +cb3.getText();
-				optionTotal += 300;
 			}
 		}
-		
+
 		taOptions.setText(list);
 	}
 
 
 	public void nextButtonAction() {
 		Order order = AppModel.getOrder();
-		order.setOption_price(optionTotal);
 		int i = 0;
 		String[] options = new String[al.size()];
 		for (String s : al) {

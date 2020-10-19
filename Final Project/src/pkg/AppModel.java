@@ -8,6 +8,7 @@ public class AppModel {
 	private static Order order;
 	private static File file;
 	private static String current_user;
+	private static boolean isNewOrder;
 
 	public AppModel() {
 		// TODO Auto-generated constructor stub
@@ -41,6 +42,12 @@ public class AppModel {
 	}
 	public static void setCurrent_user(String current_user) {
 		AppModel.current_user = current_user;
+	}
+	public static boolean isNewOrder() {
+		return isNewOrder;
+	}
+	public static void setNewOrder(boolean isNewOrder) {
+		AppModel.isNewOrder = isNewOrder;
 	}
 
 
