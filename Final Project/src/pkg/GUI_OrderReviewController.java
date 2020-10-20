@@ -38,6 +38,10 @@ public class GUI_OrderReviewController {
 		String list =  new String();
 		String trim = AppModel.getOrder().getTrim();
 
+		if(AppModel.getCurrent_user().equals("Dealer")) {
+			btnsubmit.setText("Fulfill");
+		}
+
 		OptionIter iter = new OptionIter(helperFunctions.buildFactoryOptions().getOption());
 
 		switch(trim) {
@@ -47,12 +51,9 @@ public class GUI_OrderReviewController {
 			while (iter.hasNext()){
 				list = list + "-" +iter.next().getName() +"\n";			
 			}
-			list = list + "\nOptions:";
+			list = list + "\nOptions: \n-----------------------";
 			for(String s : AppModel.getOrder().getOptions())
 				list = list + "\n" +s;	
-			
-		//	String[] s = AppModel.getOrder().getOptions();
-			
 			break;
 		case "Common":
 			System.out.println("Common Chosen");
@@ -79,10 +80,24 @@ public class GUI_OrderReviewController {
 		break;
 		}
 
+
+		list+="\nTrim Price: $" + AppModel.getOrder().getPrice() +"\n"
+				+ "Option Total: $"+ AppModel.getOrder().getOption_price()+"\n"
+				+ "Total Price: $" + String.valueOf(AppModel.getOrder().getPrice() + AppModel.getOrder().getOption_price());
 		ta.setText(list);
 	}
 
+
+
 	public void submit() {
+
+	if(AppModel.getCurrent_user().equals("Dealer"))
+		dealersubmit();
+	else
+		customersubmit();
+	}
+	
+	private void dealersubmit() {
 
 		String user;
 		String status;
@@ -90,16 +105,67 @@ public class GUI_OrderReviewController {
 		user=AppModel.getCurrent_user();
 
 
-		status = AppModel.getOrder().getStatus();				
-		oi.setstatus(user, status);
+		//status = AppModel.getOrder().getStatus();				
+		oi.setstatus(user, "Fulfilled");
 
 		int id =AppModel.getOrder().getId();
 		int index = AppModel.getJh().getOrderIndexByID(id);
-		
+
 		if((index !=-1)) {
 			AppModel.getJh().update(index, AppModel.getOrder());			
 		}
-		
+
+		JParser.save(AppModel.getJh(), AppModel.getFile().getAbsolutePath());
+
+		System.out.println("Fulfilled");
+
+		btnsubmit.setVisible(false);
+		lblmsg.setText("Fulfilling Order  Please wait.....");
+
+
+
+		Task<Void> sleeper = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+				}
+				return null;
+			}
+		};
+		sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				btnsubmit.setVisible(false);
+				lblmsg.setVisible(false);
+				btnclose.setVisible(true);
+				btnclose.setDisable(false);
+
+			}
+		});
+		new Thread(sleeper).start();
+	}
+
+
+	private void customersubmit() {		
+
+		String user;
+		String status;
+		OrderInfo oi = new OrderProxy();
+		user=AppModel.getCurrent_user();
+
+
+		//status = AppModel.getOrder().getStatus();				
+		oi.setstatus(user, "Submitted");
+
+		int id =AppModel.getOrder().getId();
+		int index = AppModel.getJh().getOrderIndexByID(id);
+
+		if((index !=-1)) {
+			AppModel.getJh().update(index, AppModel.getOrder());			
+		}
+
 		JParser.save(AppModel.getJh(), AppModel.getFile().getAbsolutePath());
 
 		System.out.println("Submitted");
@@ -113,7 +179,7 @@ public class GUI_OrderReviewController {
 			@Override
 			protected Void call() throws Exception {
 				try {
-					Thread.sleep(5000);
+					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 				}
 				return null;
@@ -138,7 +204,7 @@ public class GUI_OrderReviewController {
 	}
 
 	public void BackButton() {
-
+		AppModel.getOrder().setStatus("Editing");
 		Pane pPane;	
 		Stage stage =  (Stage)gp.getScene().getWindow();	
 		stage.close();
@@ -159,7 +225,7 @@ public class GUI_OrderReviewController {
 			e.printStackTrace();
 		}			
 
-	
+
 	}
 
 

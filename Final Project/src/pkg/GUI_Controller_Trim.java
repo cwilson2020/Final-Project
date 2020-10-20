@@ -16,12 +16,16 @@ public class GUI_Controller_Trim {
 	@FXML private TextArea taValue;
 	@FXML private TextArea taCommon;
 	@FXML private TextArea taExtreme;
+	@FXML private RadioButton rbCommon;
+	@FXML private RadioButton rbExtreme;
+	@FXML private RadioButton rbValue;
 	@FXML private ToggleGroup trimToggleGroup;
 
 	@FXML private AnchorPane aPane;
 	AppModel appModel;
 	Stage stage;
-private Trim trim;
+
+	private Trim trim;
 
 
 	public GUI_Controller_Trim() {
@@ -63,6 +67,13 @@ private Trim trim;
 		trim = new Extreme_Type();
 		list = list + "\n\n$" +String.valueOf(trim.getPrice());
 		taExtreme.setText(list);
+
+		if(AppModel.getCurrent_user().equals("Dealer"))
+		{
+			rbCommon.setDisable(true);
+			rbExtreme.setDisable(true);
+			rbValue.setDisable(true);
+		}
 	}
 
 
@@ -101,7 +112,7 @@ private Trim trim;
 			order = AppModel.getOrder();
 			trim = new Extreme_Type();	
 			order.setTrim(trim.getTrim());
-					trim = new Extreme_Type();			
+			trim = new Extreme_Type();			
 			order.setPrice(trim.getPrice());					
 			order.setPrice(trim.getPrice());	
 			AppModel.setOrder(order);

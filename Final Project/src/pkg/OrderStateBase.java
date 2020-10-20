@@ -13,13 +13,34 @@ public class OrderStateBase {
 
 
 	private OrderActions orderState;
-
+	String state;
 	public OrderStateBase() {
 		canceled = new CancelledOrder(this);
 		submitted = new SubmittedOrder(this);
 		fulfilled = new FulfilledOrder(this);
 		editing = new  EditingOrder(this);
-	//orderState = 
+
+		if(AppModel.getOrder() == null)		
+			state = "Editing";
+		else 
+			state = AppModel.getOrder().getStatus();
+
+		switch(state) {
+		case "canceled":
+			orderState = canceled;
+			break;
+		case "Editing":
+			orderState = editing;
+			break;
+		case "Submitted":
+			orderState = submitted;
+			break;
+		case "fulfilled":
+			orderState = fulfilled;
+			break;
+		}
+
+		//   orderState = 
 	}
 
 

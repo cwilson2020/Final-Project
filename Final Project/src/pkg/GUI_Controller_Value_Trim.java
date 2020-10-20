@@ -41,7 +41,7 @@ public class GUI_Controller_Value_Trim {
 	private Trim trim;
 
 	public GUI_Controller_Value_Trim() {
-	
+
 		System.out.println("GUI _Controller Value Trim constructor");
 	}
 
@@ -88,15 +88,15 @@ public class GUI_Controller_Value_Trim {
 		list+="-----------------------\n"
 				+"Trim Price:" + String.valueOf(new Value_Type().getPrice()) +"\n"
 				+ "Option Total: "+ String.valueOf(optionTotal) +"\n"
-		+ "Total Price: " + String.valueOf(optionTotal + new Value_Type().getPrice());
+				+ "Total Price: " + String.valueOf(optionTotal + new Value_Type().getPrice());
 		taOptions.setText(list);
-	
+
 	}
 
 
 	@FXML
 	public void initialize() {	
-		System.out.println("initialized");
+		System.out.println("initialized Value trim ");
 		cb1.setText("Race Engine Upgrade $1500");
 		cb2.setText("Wheel Upgrade $500 ");
 		cb3.setText("Leather Seats $300");
@@ -117,22 +117,30 @@ public class GUI_Controller_Value_Trim {
 			if (helperFunctions.SearchArray(options, cb1.getText()) !=-1) {
 				cb1.setSelected(true);
 				list = list + "\n" +cb1.getText();
+				al.add( cb1.getText());
 				optionTotal += 1500;
 			}
 
 			if (helperFunctions.SearchArray(options, cb2.getText()) !=-1) {
 				cb2.setSelected(true);
 				list = list + "\n" +cb2.getText();
+				al.add( cb2.getText());
 				optionTotal += 500;
 			}
 
 			if (helperFunctions.SearchArray(options, cb3.getText()) !=-1) {
 				cb3.setSelected(true);
 				list = list + "\n" +cb3.getText();
+				al.add( cb3.getText());
 				optionTotal += 300;
 			}
 		}
-		
+
+		list+="\n-----------------------\n"
+				+"Trim Price:" + String.valueOf(new Value_Type().getPrice()) +"\n"
+				+ "Option Total: "+ String.valueOf(optionTotal) +"\n"
+				+ "Total Price: " + String.valueOf(optionTotal + new Value_Type().getPrice());
+
 		taOptions.setText(list);
 	}
 
@@ -140,6 +148,7 @@ public class GUI_Controller_Value_Trim {
 	public void nextButtonAction() {
 		Order order = AppModel.getOrder();
 		order.setOption_price(optionTotal);
+		order.setStatus("Editing");
 		int i = 0;
 		String[] options = new String[al.size()];
 		for (String s : al) {
@@ -154,7 +163,7 @@ public class GUI_Controller_Value_Trim {
 			jh.update(index, order);
 		}
 		else {
-			jh.add(order);
+		//jh.add(order);
 			AppModel.setNewOrder(false);
 		}
 

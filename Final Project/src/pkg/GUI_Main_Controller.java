@@ -44,7 +44,7 @@ public class GUI_Main_Controller {
 	@FXML RadioButton radiodealer;
 	@FXML Label lblName;
 	String warning;
-	static OrderStateBase state = new OrderStateBase();
+	static OrderStateBase state;
 
 	//@FXML ChoiceBox choicebox;
 
@@ -105,6 +105,9 @@ public class GUI_Main_Controller {
 				tfName.setVisible(true);
 				tfName.setDisable(false);
 				btnfile.setVisible(true);
+				//existingorder.setVisible(true);
+			//	existingorder.setSelected(true);
+				existingorder.setDisable(false);
 
 				if (neworder.isSelected()){
 					btnfolder.setVisible(true);
@@ -124,8 +127,10 @@ public class GUI_Main_Controller {
 				lblfile.setVisible(true);	
 				btnfile.setVisible(true);
 				neworder.setVisible(false);
-				existingorder.setVisible(false);
-				btnfolder.setVisible(true);
+				existingorder.setVisible(true);
+				existingorder.setSelected(true);
+				existingorder.setDisable(true);
+				btnfolder.setVisible(false);
 				//choicebox.setVisible(true);
 				tfName.setVisible(true);
 				tfName.setDisable(true);
@@ -144,10 +149,15 @@ public class GUI_Main_Controller {
 			file =  f.getAbsolutePath();
 			PopulateChoiceBox();
 		}
-		choicebox.setVisible(true);
+		if(existingorder.isSelected()) {
+			choicebox.setVisible(true);
+		}
 		btnButton.setVisible(true);
 		//neworder.setVisible(true);
 		//existingorder.setVisible(true);
+		JParser jp = new JParser();
+		jh = jp.CreateOrderArrayfromFile(file);
+		AppModel.setJh(jh);
 		AppModel.setFile(f);
 
 	}
@@ -257,16 +267,23 @@ public class GUI_Main_Controller {
 				Random rand =  new Random();
 				int id = rand.nextInt((9999 -100)+1)+10;
 				order.setId(id);
+				state = new OrderStateBase();
 				OrderActions oa = state.getEditOrder();
 				state.setOrderState(oa);
 				AppModel.setOrder(order);
 				AppModel.setNewOrder(true);
-				JSONHolder jh  = new JSONHolder(1);
+				if(AppModel.getJh() == null) {
+					JSONHolder jh  = new JSONHolder(1);
+				}
+				else{
+					AppModel.getJh().add(order);
+				}
 				AppModel.setJh(jh);
 			}
 			else {
+				state = new OrderStateBase();
 				status = AppModel.getOrder().getStatus();	
-				AppModel.setNewOrder(true);
+				AppModel.setNewOrder(false);
 			}
 
 			oi.setstatus(user, status);
