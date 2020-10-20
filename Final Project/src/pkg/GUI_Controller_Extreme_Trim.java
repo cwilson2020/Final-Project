@@ -17,7 +17,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class GUI_Controller_Common_Trim {
+public class GUI_Controller_Extreme_Trim {
 	@FXML private TextArea taValue;
 	@FXML private TextArea taCommon;
 	//	@FXML private TextArea taExtreme;
@@ -40,7 +40,7 @@ public class GUI_Controller_Common_Trim {
 	ArrayList<String> al;
 	private Trim trim;
 
-	public GUI_Controller_Common_Trim() {
+	public GUI_Controller_Extreme_Trim() {
 
 		System.out.println("GUI _Controller Common Trim constructor");
 	}
@@ -49,7 +49,7 @@ public class GUI_Controller_Common_Trim {
 		optionTotal = 0;
 		al = new  ArrayList<String>();
 		String list =  new String();
-		OptionIter iter = new OptionIter(helperFunctions.buildCommonOptions().getOption());
+		OptionIter iter = new OptionIter(helperFunctions.buildExtremeOptions().getOption());
 		while (iter.hasNext()){
 			list = list + "-" +iter.next().getName() +"\n";
 		}
@@ -59,14 +59,14 @@ public class GUI_Controller_Common_Trim {
 		{
 			list = list + cb1.getText()+"\n";
 			al.add( cb1.getText());
-			optionTotal += 1500;			
+			optionTotal += 2500;			
 		}
 
 		if (cb2.isSelected())
 		{
 			list = list +cb2.getText()+"\n";
 			al.add( cb2.getText());
-			optionTotal += 500;
+			optionTotal += 1800;
 		}
 		if (cb3.isSelected())
 		{
@@ -78,14 +78,20 @@ public class GUI_Controller_Common_Trim {
 		{
 			list = list + cb4.getText()+"\n";
 			al.add( cb4.getText());
-				optionTotal += 600;
+			optionTotal += 1200;
 		}	
 		if (cb5.isSelected())
 		{
 			list = list + cb5.getText()+"\n";
 			al.add( cb5.getText());
+			optionTotal += 500;
 		}
-
+		if (cb6.isSelected())
+		{
+			list = list + cb6.getText()+"\n";
+			al.add( cb6.getText());
+			optionTotal += 1000;
+		}
 		list+="-----------------------\n"
 				+"Trim Price:" + String.valueOf(new Value_Type().getPrice()) +"\n"
 				+ "Option Total: "+ String.valueOf(optionTotal) +"\n"
@@ -98,16 +104,16 @@ public class GUI_Controller_Common_Trim {
 	@FXML
 	public void initialize() {	
 		System.out.println("initialized Value trim ");
-		cb1.setText("Race Engine Upgrade $1500");
-		cb2.setText("Wheel Upgrade $500 ");
-		cb3.setText("Racing Seats $700");
-		cb4.setText("Premium Sound System $600");
-		cb5.setText("Upgrade Appearance Package");
-		cb6.setVisible(false);
+		cb1.setText("Turbo High Output Engine $2500");
+		cb2.setText("20 Inch chrome upgrade $1800 ");
+		cb3.setText("Racing Seats Cooled & Heated $700");
+		cb4.setText("Premium Infotainment System $1200");
+		cb5.setText("Black Appearance Package $500");
+		cb6.setText("360 Surround Camera $1000");
 
 		String list =  new String();
 		al = new  ArrayList<String> ();
-		OptionIter iter = new OptionIter(helperFunctions.buildCommonOptions().getOption());
+		OptionIter iter = new OptionIter(helperFunctions.buildExtremeOptions().getOption());
 		while (iter.hasNext()){
 			list = list + "-" +iter.next().getName() +"\n";
 		}
@@ -119,14 +125,14 @@ public class GUI_Controller_Common_Trim {
 				cb1.setSelected(true);
 				list = list + "\n" +cb1.getText();
 				al.add( cb1.getText());
-				optionTotal += 1500;
+				optionTotal += 2500;
 			}
 
 			if (helperFunctions.SearchArray(options, cb2.getText()) !=-1) {
 				cb2.setSelected(true);
 				list = list + "\n" +cb2.getText();
 				al.add( cb2.getText());
-				optionTotal += 500;
+				optionTotal += 1800;
 			}
 
 			if (helperFunctions.SearchArray(options, cb3.getText()) !=-1) {
@@ -135,13 +141,24 @@ public class GUI_Controller_Common_Trim {
 				al.add( cb3.getText());
 				optionTotal += 700;
 			}
-						if (helperFunctions.SearchArray(options, cb4.getText()) !=-1) {
+			if (helperFunctions.SearchArray(options, cb4.getText()) !=-1) {
 				cb4.setSelected(true);
 				list = list + "\n" +cb4.getText();
 				al.add( cb4.getText());
-				optionTotal += 600;
+				optionTotal += 1200;
 			}
-			
+			if (helperFunctions.SearchArray(options, cb5.getText()) !=-1) {
+				cb5.setSelected(true);
+				list = list + "\n" +cb5.getText();
+				al.add( cb5.getText());
+				optionTotal += 500;
+			}	
+			if (helperFunctions.SearchArray(options, cb6.getText()) !=-1) {
+				cb6.setSelected(true);
+				list = list + "\n" +cb6.getText();
+				al.add( cb6.getText());
+				optionTotal += 1000;
+			}
 		}
 
 		list+="\n-----------------------\n"
@@ -157,7 +174,7 @@ public class GUI_Controller_Common_Trim {
 		Order order = AppModel.getOrder();
 		order.setOption_price(optionTotal);
 		order.setStatus("Editing");
-		order.setTrim("Common");
+		order.setTrim("Extreme");
 		int i = 0;
 		String[] options = new String[al.size()];
 		for (String s : al) {
@@ -172,7 +189,7 @@ public class GUI_Controller_Common_Trim {
 			jh.update(index, order);
 		}
 		else {
-		//jh.add(order);
+			//jh.add(order);
 			AppModel.setNewOrder(false);
 		}
 

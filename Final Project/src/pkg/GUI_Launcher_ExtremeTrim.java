@@ -35,12 +35,12 @@ public class  GUI_Launcher_ExtremeTrim{
 		this.stage = stage;
 
 		try {
-			pPane = (Pane)FXMLLoader.load(getClass().getResource("CommonPackageConfigurator.fxml"));
+			pPane = (Pane)FXMLLoader.load(getClass().getResource("ExtremePackageConfigurator.fxml"));
 	
 			Scene scene = new Scene(pPane,800,700);
 
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			stage.setTitle("Common Package Option Menu");
+			stage.setTitle("EXTREME Package Option Menu");
 
 			stage.setScene(scene);
 

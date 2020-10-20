@@ -74,9 +74,20 @@ public class GUI_Controller_Trim {
 			rbExtreme.setDisable(true);
 			rbValue.setDisable(true);
 		}
+
+		if(AppModel.getOrder().getTrim() !=null) {
+			if(AppModel.getOrder().getTrim().equals("Value")) {
+				rbValue.setSelected(true);
+			}
+			if(AppModel.getOrder().getTrim().equals("Common")) {
+				rbCommon.setSelected(true);
+			}
+			if(AppModel.getOrder().getTrim().equals("Extreme")) {
+				rbExtreme.setSelected(true);
+			}
+		}
+
 	}
-
-
 
 	public void nextButtonAction() {
 		System.out.println("GUI _Controllerstage TestTrim");
@@ -112,9 +123,10 @@ public class GUI_Controller_Trim {
 			order = AppModel.getOrder();
 			trim = new Extreme_Type();	
 			order.setTrim(trim.getTrim());
-			trim = new Extreme_Type();			
+
 			order.setPrice(trim.getPrice());					
-			order.setPrice(trim.getPrice());	
+		GUI_Launcher_ExtremeTrim ep = new GUI_Launcher_ExtremeTrim(stage);
+			
 			AppModel.setOrder(order);
 			//	GUI_Launcher_ExtremeTrim ep = new GUI_Launcher_ValueTrim(stage);
 			break;

@@ -63,7 +63,7 @@ public class GUI_OrderReviewController {
 				list = list + "-" +iter.next().getName() +"\n";			
 			}
 			for(String s : AppModel.getOrder().getOptions())
-				list = list + " " +s;		
+				list = list + "\n" +s;	
 			break;
 		case "Extreme":
 			System.out.println("Extreme Chosen");
@@ -73,7 +73,7 @@ public class GUI_OrderReviewController {
 				list = list + "-" +iter.next().getName() +"\n";			
 			}
 			for(String s : AppModel.getOrder().getOptions())
-				list = list + " " +s;		
+				list = list + "\n" +s;	
 			break;
 
 		default: System.out.println("No Selection Detected");
