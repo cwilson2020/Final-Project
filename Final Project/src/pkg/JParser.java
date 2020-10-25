@@ -29,7 +29,7 @@ public class JParser {
 
 	}
 
-
+/*
 	public void writeRecord() {
 
 		JSONObject record1 = new JSONObject();
@@ -67,8 +67,8 @@ public class JParser {
 			e.printStackTrace();
 		}
 	}
-
-
+*/
+/*
 	public void readRecord() {
 		String location = "C://Users//user//Desktop//database.txt";
 		Gson gson = new Gson();
@@ -91,7 +91,8 @@ public class JParser {
 		System.out.println(result);
 
 	}
-
+*/
+	/*
 	public void readLine() {
 		int linecount=0;
 		try {
@@ -115,7 +116,8 @@ public class JParser {
 	}
 
 
-
+*/
+	/*
 	public void readbychar() {
 		int charCount=0;
 		try {
@@ -133,7 +135,8 @@ public class JParser {
 			e.printStackTrace();
 		}
 	}
-
+*/
+	
 	public int JSONCount() {
 		int charCount=0;
 		int JSONCount =0;
@@ -196,6 +199,8 @@ public loadDatabase(String fileName) {
 
 }
 	 */
+	
+	/*
 	static Order retrieveOrderByID(JSONHolder jh, String id){
 
 		JSONIter ji = new JSONIter(jh.getOrder());
@@ -211,13 +216,14 @@ public loadDatabase(String fileName) {
 		return tempOrder;
 
 	}
-
+*/
 	public Order StringtoObj(String json) {
 		Gson gson = new Gson();
 		Order order = gson.fromJson(json, Order.class); 	
 		return order;
 	}
 
+	
 	public JSONHolder CreateOrderArrayfromFile(String fileName) {
 		int jsonCount = JSONCount();
 		JSONHolder jh = new JSONHolder(jsonCount);

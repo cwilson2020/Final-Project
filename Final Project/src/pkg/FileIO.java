@@ -40,7 +40,7 @@ public class FileIO {
 		this.location = location; 
 	}
 
-
+/*
 	public boolean fileExists(String path) {
 		File f = new File(path);
 
@@ -49,7 +49,7 @@ public class FileIO {
 		else 
 			return false;
 	}
-
+*/
 	public static boolean Createfile(String path) {
 		boolean result = false;
 		try {
@@ -70,6 +70,7 @@ public class FileIO {
 	}
 
 
+	/*
 	public void saveToXML(String docRoot, String root, String key, String value) {
 		Document doc;
 		Element e = null;
@@ -101,7 +102,7 @@ public class FileIO {
 
 
 			doc.appendChild(rootEle);
-			 */
+			
 			try {
 				Transformer tr = TransformerFactory.newInstance().newTransformer();
 				tr.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -125,12 +126,12 @@ public class FileIO {
 	}
 
 
+*/
 
 
 
 
-
-
+/*
 
 
 	public boolean readXML(String key) {
@@ -177,7 +178,9 @@ public class FileIO {
 		return value;
 	}
 
-
+*/
+	
+	/*
 
 
 	public boolean demoReadXML(String key) {
@@ -217,7 +220,8 @@ public class FileIO {
 	}
 
 
-
+*/
+	/*
 	public boolean readXML_stock() {
 		rolev = new ArrayList<String>();
 		Document dom;
@@ -265,7 +269,8 @@ public class FileIO {
 		return false;
 	}
 
-
+*/
+	/*
 	public void saveToXML_stock() {
 		Document dom;
 		Element e = null;
@@ -321,7 +326,8 @@ public class FileIO {
 			System.out.println("UsersXML: Error trying to instantiate DocumentBuilder " + pce);
 		}
 	}
-
+*/
+	/*
 	public void addElement(String docRoot,String root, String newTag, String value) {
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = null;
@@ -372,6 +378,8 @@ public class FileIO {
 
 
 	}
+	
+	*/
 /*
 	public void read3() {
 		try {
@@ -475,7 +483,7 @@ public class FileIO {
 	}*/
 
 
-
+/*
 	public void updateElementValue(String rootTag, String tagToFind, String oldValue, String newValue) {
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = null;
@@ -515,7 +523,9 @@ public class FileIO {
 			}
 		}
 	}
-
+*/
+	
+	
 	private void writeXMLFile(Document doc) throws TransformerException {
 		doc.getDocumentElement().normalize();
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();

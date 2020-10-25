@@ -6,7 +6,7 @@ public interface Trim {
 	int getPrice();	
 }
 
-class Value_Type implements Trim{
+ class Value_Type implements Trim{
 
 	@Override
 	public String getTrim() {	

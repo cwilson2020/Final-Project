@@ -320,8 +320,10 @@ public class GUI_Main_Controller {
 
 	}
 	public void cancelOrder() {	
+		if(AppModel.getOrder() !=null) {
 		warning = state.cancelOrder();
 		lblwarning.setText(warning); 
+		}
 
 	}
 

@@ -13,6 +13,7 @@ public class AppModel {
 	public AppModel() {
 		// TODO Auto-generated constructor stub
 	}
+	
 	public AppModel(JSONHolder ljh, Order lorder, File lfile) {
 		this.jh = ljh;
 		this.order = lorder;

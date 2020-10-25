@@ -5,8 +5,8 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ JunithelperFunctionsTest.class, JunitJSONHolderTest.class, JUnitOrderProxyTest.class,
-		JUnitStatePatternTests.class })
+@SuiteClasses({ AppModelTest.class, JParserTest.class, JunithelperFunctionsTest.class, JunitJSONHolderTest.class,
+		OptionIterTest.class, JUnitOrderProxyTest.class, JUnitStatePatternTests.class, OptionTest.class, OrderTest.class, smithTest2.class })
 public class AllTests {
 
 }
